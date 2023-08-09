@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 from .models import *
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
@@ -6,6 +7,6 @@ class MemberSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['username','password']
         
-    def update(self, instance, validated_data):
-        print(instance.favcite.id)
-        return super().update(instance, validated_data)
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password']) 
+        return super().create(validated_data)

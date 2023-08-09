@@ -4,7 +4,6 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.mail import send_mail
 from django.contrib.auth.models import UserManager
-from django.contrib.auth.hashers import make_password
 from cites.models import Cite
 # Create your models here.
 
@@ -48,7 +47,6 @@ class Member(AbstractBaseUser,PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
         
     def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
         super(Member, self).save(*args, **kwargs)
 
     
